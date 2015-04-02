@@ -126,8 +126,8 @@ Servo sabertoothLeftChannel;
 
   /* Wrap the encoder reset function */
   void resetEncoder(int i) {
-    if (i == LEFT) return encoderLeft = 0;
-    else return encoderRight = 0;
+    if (i == LEFT) encoderLeft = 0;
+    else encoderRight = 0;
   }
 
   /* Wrap the encoder reset function */
