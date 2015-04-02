@@ -41,7 +41,23 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
-
+//my code ******************************************
+#include<Servo.h>
+#define FORWARDS true
+#define BACKWARDS false
+#define encoderRightPin 2
+#define encoderLeftPin 3
+#define sabertoothRightPin 5
+#define sabertoothLeftPin 6
+#define MINSABERTOOTH 70
+#define MAXSABERTOOTH 110
+volatile long encoderLeft = 0;
+volatile long encoderRight = 0;
+volatile boolean directionLeft = FORWARDS;//true = forward false = backwards
+volatile boolean directionRight = FORWARDS;//true = forward false = backwards
+Servo sabertoothRightChannel;
+Servo sabertoothLeftChannel;
+// end of my code **************************************************
 #define USE_BASE      // Enable the base controller code
 //#undef USE_BASE     // Disable the base controller code
 
@@ -74,16 +90,16 @@
 
 #ifdef USE_BASE
   /* The Pololu motor driver shield */
-  #include "DualVNH5019MotorShield.h"
+  //#include "DualVNH5019MotorShield.h"
 
   /* The Robogaia Mega Encoder shield */
-  #include "MegaEncoderCounter.h"
+  //#include "MegaEncoderCounter.h"
 
   /* Create the motor driver object */
-  DualVNH5019MotorShield drive;
+  //DualVNH5019MotorShield drive;
 
   /* Create the encoder shield object */
-  MegaEncoderCounter encoders(4); // Initializes the Mega Encoder Counter in the 4X Count mode
+  //MegaEncoderCounter encoders(4); // Initializes the Mega Encoder Counter in the 4X Count mode
 
   /* PID parameters and functions */
   #include "diff_controller.h"
@@ -104,14 +120,14 @@
 
   /* Wrap the encoder reading function */
   long readEncoder(int i) {
-    if (i == LEFT) return encoders.YAxisGetCount();
-    else return encoders.XAxisGetCount();
+    if (i == LEFT) return encoderLeft;
+    else return encoderRight;
   }
 
   /* Wrap the encoder reset function */
   void resetEncoder(int i) {
-    if (i == LEFT) return encoders.YAxisReset();
-    else return encoders.XAxisReset();
+    if (i == LEFT) return encoderLeft = 0;
+    else return encoderRight = 0;
   }
 
   /* Wrap the encoder reset function */
@@ -122,14 +138,50 @@
   
   /* Wrap the motor driver initialization */
   void initMotorController() {
-    drive.init();
+    sabertoothRightChannel.attach(sabertoothRightPin, 1000, 2000);
+    sabertoothLeftChannel.attach(sabertoothLeftPin, 1000, 2000);
+    sabertoothRightChannel.write(90);
+    sabertoothLeftChannel.write(90);
+    attachInterrupt(encoderRightPin, encoderRightISR, CHANGE);
+    attachInterrupt(encoderLeftPin, encoderLeftISR, CHANGE);
   }
-
+  //ISRs for the encoders
+  void encoderRightISR(){
+   if(directionRight == BACKWARDS){
+    encoderRight--;
+    
+   }else{
+    encoderRight++;
+   }
+  }
+  
+  void encoderLeftISR(){
+   if(directionLeft == BACKWARDS){
+    encoderLeft--;
+    
+   }else{
+    encoderLeft++;
+   }
+  }
   /* Wrap the drive motor set speed function */
   void setMotorSpeed(int i, int spd) {
-    if (i == LEFT) drive.setM1Speed(spd);
-    else drive.setM2Speed(spd);
-  }
+    if (i == LEFT){ 
+     if(spd < 90){
+      directionLeft == BACKWARDS;
+     }else{
+      directionLeft == FORWARDS;
+     }
+     sabertoothLeftChannel.write(constrain(spd, MINSABERTOOTH, MAXSABERTOOTH));
+    }else{ 
+     if(spd < 90){
+      directionRight == BACKWARDS;
+     }else{
+      directionRight == FORWARDS;
+     }
+     sabertoothRightChannel.write(constrain(spd, MINSABERTOOTH, MAXSABERTOOTH));
+    }
+     
+    }
 
   // A convenience function for setting both motor speeds
   void setMotorSpeeds(int leftSpeed, int rightSpeed) {
