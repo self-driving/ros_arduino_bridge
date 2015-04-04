@@ -21,6 +21,15 @@
 #define LEFT            0
 #define RIGHT           1
 
+#define FORWARDS true
+#define BACKWARDS false
+#define encoderRightPin 2
+#define encoderLeftPin 3
+#define sabertoothRightPin 5
+#define sabertoothLeftPin 6
+#define MINSABERTOOTH 70
+#define MAXSABERTOOTH 110
+
 #endif
 
 
