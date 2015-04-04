@@ -58,6 +58,8 @@
 
 #elif defined BOT
 void initMotorController() {
+Servo sabertoothRightChannel;
+Servo sabertoothLeftChannel;
 sabertoothRightChannel.attach(sabertoothRightPin, 1000, 2000);
 sabertoothLeftChannel.attach(sabertoothLeftPin, 1000, 2000);
 sabertoothRightChannel.write(90);
