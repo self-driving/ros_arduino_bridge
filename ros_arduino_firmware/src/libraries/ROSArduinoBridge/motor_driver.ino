@@ -64,8 +64,7 @@ sabertoothRightChannel.attach(sabertoothRightPin, 1000, 2000);
 sabertoothLeftChannel.attach(sabertoothLeftPin, 1000, 2000);
 sabertoothRightChannel.write(90);
 sabertoothLeftChannel.write(90);
-attachInterrupt(interruptRightPin, encoderRightISR, CHANGE);
-attachInterrupt(interruptLeftPin, encoderLeftISR, CHANGE);
+
 }
 
 void setMotorSpeed(int i, int spd) {
