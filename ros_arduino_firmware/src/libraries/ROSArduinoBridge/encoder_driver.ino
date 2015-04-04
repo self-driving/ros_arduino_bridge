@@ -69,6 +69,7 @@
     }
   }
   #elif defined BOT
+  #include "motor_driver.h"
   #include "commands.h";
   volatile long encoderLeft = 0L;
   volatile long encoderRight = 0L;
@@ -78,14 +79,14 @@ attachInterrupt(encoderRightPin, encoderRightISR, CHANGE);
 attachInterrupt(encoderLeftPin, encoderLeftISR, CHANGE);
   }
 void encoderRightISR(){
-if(directionRight == BACKWARDS){
+if(direction(RIGHT) == BACKWARDS){
 encoderRight--;
 }else{
 encoderRight++;
 }
 }
 void encoderLeftISR(){
-if(directionLeft == BACKWARDS){
+if(direction(LEFT) == BACKWARDS){
 encoderLeft--;
 }else{
 encoderLeft++;
