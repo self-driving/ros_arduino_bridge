@@ -51,16 +51,19 @@
 /* Define the motor controller and encoder library you are using */
 #ifdef USE_BASE
    /* The Pololu VNH5019 dual motor driver shield */
-   #define POLOLU_VNH5019
+   //#define POLOLU_VNH5019
 
    /* The Pololu MC33926 dual motor driver shield */
    //#define POLOLU_MC33926
 
    /* The RoboGaia encoder shield */
-   #define ROBOGAIA
+   //#define ROBOGAIA
    
    /* Encoders directly attached to Arduino board */
    //#define ARDUINO_ENC_COUNTER
+   
+   /*Bot*/
+   #define BOT
 #endif
 
 //#define USE_SERVOS  // Enable use of PWM servos as defined in servos.h
