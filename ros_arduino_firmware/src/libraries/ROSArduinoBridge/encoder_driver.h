@@ -17,4 +17,7 @@
 long readEncoder(int i);
 void resetEncoder(int i);
 void resetEncoders();
-
+#ifdef BOT
+void encoderRightISR();
+void encoderLeftISR();
+#endif
