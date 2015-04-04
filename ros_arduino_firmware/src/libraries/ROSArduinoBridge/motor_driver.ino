@@ -66,7 +66,14 @@ sabertoothRightChannel.write(90);
 sabertoothLeftChannel.write(90);
 
 }
+boolean direction(int i){
+   if(i == LEFT){
+      return directionLeft;
+   }else{
+      return directionRight;
+   }
 
+}
 void setMotorSpeed(int i, int spd) {
 if (i == LEFT){
 if(spd < 90){
