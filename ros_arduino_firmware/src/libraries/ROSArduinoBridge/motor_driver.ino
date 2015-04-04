@@ -8,7 +8,7 @@
    *************************************************************/
 
 #ifdef USE_BASE
-   
+#include "commands.h";
 #if defined POLOLU_VNH5019
   /* Include the Pololu library */
   #include "DualVNH5019MotorShield.h"
