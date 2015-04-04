@@ -66,6 +66,8 @@ sabertoothRightChannel.write(90);
 sabertoothLeftChannel.write(90);
 
 }
+boolean directionLeft = false;
+boolean directionRight = false;
 boolean direction(int i){
    if(i == LEFT){
       return directionLeft;
