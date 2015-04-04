@@ -55,6 +55,40 @@
     setMotorSpeed(LEFT, leftSpeed);
     setMotorSpeed(RIGHT, rightSpeed);
   }
+
+#elif defined BOT
+void initMotorController() {
+sabertoothRightChannel.attach(sabertoothRightPin, 1000, 2000);
+sabertoothLeftChannel.attach(sabertoothLeftPin, 1000, 2000);
+sabertoothRightChannel.write(90);
+sabertoothLeftChannel.write(90);
+attachInterrupt(interruptRightPin, encoderRightISR, CHANGE);
+attachInterrupt(interruptLeftPin, encoderLeftISR, CHANGE);
+}
+
+void setMotorSpeed(int i, int spd) {
+if (i == LEFT){
+if(spd < 90){
+directionLeft == BACKWARDS;
+}else{
+directionLeft == FORWARDS;
+}
+sabertoothLeftChannel.write(constrain(spd, MINSABERTOOTH, MAXSABERTOOTH));
+}else{
+if(spd < 90){
+directionRight == BACKWARDS;
+}else{
+directionRight == FORWARDS;
+}
+sabertoothRightChannel.write(constrain(spd, MINSABERTOOTH, MAXSABERTOOTH));
+}
+}
+// A convenience function for setting both motor speeds
+void setMotorSpeeds(int leftSpeed, int rightSpeed) {
+setMotorSpeed(LEFT, leftSpeed);
+setMotorSpeed(RIGHT, rightSpeed);
+}
+
 #else
   #error A motor driver must be selected!
 #endif
