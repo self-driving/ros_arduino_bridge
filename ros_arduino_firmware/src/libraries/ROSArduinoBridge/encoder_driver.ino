@@ -68,6 +68,43 @@
       return;
     }
   }
+  #elif defined BOT
+  #include "commands.h";
+  volatile long encoderLeft = 0L;
+  volatile long encoderRight = 0L;
+  //ISRs for the encoders
+  void initEncoders(){
+attachInterrupt(encoderRightPin, encoderRightISR, CHANGE);
+attachInterrupt(encoderLeftPin, encoderLeftISR, CHANGE);
+  }
+void encoderRightISR(){
+if(directionRight == BACKWARDS){
+encoderRight--;
+}else{
+encoderRight++;
+}
+}
+void encoderLeftISR(){
+if(directionLeft == BACKWARDS){
+encoderLeft--;
+}else{
+encoderLeft++;
+}
+}
+  long readEncoder(int i) {
+if (i == LEFT) return encoderLeft;
+else return encoderRight;
+}
+/* Wrap the encoder reset function */
+void resetEncoder(int i) {
+if (i == LEFT) encoderLeft = 0;
+else encoderRight = 0;
+}
+/* Wrap the encoder reset function */
+void resetEncoders() {
+resetEncoder(LEFT);
+resetEncoder(RIGHT);
+}
 #else
   #error A encoder driver must be selected!
 #endif
