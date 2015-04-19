@@ -33,7 +33,7 @@ SetPointInfo;
 SetPointInfo leftPID, rightPID;
 
 /* PID Parameters */
-int Kp = 20;
+int Kp = 10;
 int Kd = 12;
 int Ki = 0;
 int Ko = 50;
@@ -71,8 +71,8 @@ void doPID(SetPointInfo * p) {
   int input;
 
   //Perror = p->TargetTicksPerFrame - (p->Encoder - p->PrevEnc);
-  input = p->Encoder - p->PrevEnc;
-  Perror = p->TargetTicksPerFrame - input;
+  input = p->Encoder - p->PrevEnc;//Encoder count since last frame
+  Perror = p->TargetTicksPerFrame - input;//Error?
 
 
   /*
@@ -96,7 +96,7 @@ void doPID(SetPointInfo * p) {
   /*
   * allow turning changes, see http://brettbeauregard.com/blog/2011/04/improving-the-beginner%E2%80%99s-pid-tuning-changes/
   */
-    p->ITerm += Ki * Perror;
+    p->ITerm += Ki * Perror;//no effect when ki = 0
 
   p->output = output;
   p->PrevInput = input;
@@ -127,4 +127,3 @@ void updatePID() {
   /* Set the motor speeds accordingly */
   setMotorSpeeds(leftPID.output, rightPID.output);
 }
-

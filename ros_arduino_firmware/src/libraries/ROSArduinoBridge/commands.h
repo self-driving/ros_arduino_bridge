@@ -23,13 +23,13 @@
 
 #define FORWARDS true
 #define BACKWARDS false
-#define encoderRightPin 2
-#define encoderLeftPin 3
+#define encoderRightPin 0
+#define encoderLeftPin 1
 #define sabertoothRightPin 5
 #define sabertoothLeftPin 6
-#define MINSABERTOOTH 70
-#define MAXSABERTOOTH 110
-
+#define MINSABERTOOTH 0
+#define MAXSABERTOOTH 180
+#define STOPSABERTOOTH 85
+#define MIDSABERTOOTH 0
 #endif
-
 
